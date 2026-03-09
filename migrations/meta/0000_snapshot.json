@@ -1,29 +1,29 @@
 {
-  "id": "ed3cd35f-142c-4bbe-99a4-4a51c3327339",
+  "id": "c4c196b7-6941-48d7-9c41-cc2e0c480066",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.Features": {
-      "name": "Features",
+    "public.features_table": {
+      "name": "features_table",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "feature_name": {
-          "name": "feature_name",
-          "type": "varchar",
+        "title": {
+          "name": "title",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },

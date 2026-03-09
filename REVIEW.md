@@ -91,11 +91,11 @@ After creating a feature you redirect to `/features`. You could instead redirect
 
 ---
 
-### 9. **Unused Supabase packages**
+### 9. **Database provider**
 
 **Where:** `package.json`
 
-`@supabase/ssr` and `@supabase/supabase-js` are installed but not used in `src`; you’re using Drizzle + `postgres` only. If you’re not planning Supabase auth or API, removing them keeps the bundle and deps simpler.
+The app uses Neon with Drizzle; no Supabase packages.
 
 ---
 

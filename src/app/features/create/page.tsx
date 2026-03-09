@@ -12,12 +12,12 @@ export default function CreateFeaturePage() {
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4">
       <div>
-        <label htmlFor="featureName" className="mb-1 block text-sm font-medium">
-          Feature name
+        <label htmlFor="title" className="mb-1 block text-sm font-medium">
+          Feature title
         </label>
         <input
-          id="featureName"
-          name="featureName"
+          id="title"
+          name="title"
           type="text"
           required
           disabled={isPending}

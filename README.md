@@ -6,7 +6,7 @@ A Next.js app for managing feature docs, with a Postgres database and [Drizzle O
 
 - [Node.js](https://nodejs.org/) 18+
 - [pnpm](https://pnpm.io/) (or npm / yarn)
-- A PostgreSQL database (local, [Neon](https://neon.tech), [Supabase](https://supabase.com), etc.)
+- A PostgreSQL database (local or [Neon](https://neon.tech))
 
 ## Quick start
 
@@ -54,7 +54,7 @@ A Next.js app for managing feature docs, with a Postgres database and [Drizzle O
 |------------------|-------------------|----------------------------------------------------------|
 | Generate migrations | `pnpm db:generate` | Generate SQL migration files from `src/db/schema.ts`     |
 | Push schema      | `pnpm db:push`    | Push schema to the DB (no migration files; good for dev) |
-| Run migrations   | `pnpm db:migrate` | Run pending migrations from `supabase/migrations`        |
+| Run migrations   | `pnpm db:migrate` | Run pending migrations from `migrations/`                 |
 | Drizzle Studio   | `pnpm db:studio`  | Open the Drizzle Studio UI to inspect/edit data         |
 
 - Use **`db:push`** for quick iteration in development.
@@ -64,7 +64,7 @@ A Next.js app for managing feature docs, with a Postgres database and [Drizzle O
 
 - `src/app/` – Next.js App Router (pages, layouts)
 - `src/db/` – Drizzle schema, client, and queries
-- `supabase/migrations/` – Generated SQL migrations (when using `db:generate`)
+- `migrations/` – Generated SQL migrations (when using `db:generate`)
 
 ## Tech stack
 

@@ -1,15 +1,9 @@
-import {
-  integer,
-  pgTable,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp } from "drizzle-orm/pg-core";
 
-export const featuresTable = pgTable("Features", {
-  id: integer().primaryKey().notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  featureName: varchar("feature_name").notNull(),
+export const featuresTable = pgTable("features_table", {
+  id: serial("id").primaryKey(),
+  createdAt: timestamp().defaultNow().notNull(),
+  title: text("title").notNull(),
   markdown: text("markdown").notNull(),
 });
 
