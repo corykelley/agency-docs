@@ -26,11 +26,16 @@ A Next.js app for managing feature docs, with a Postgres database and [Drizzle O
    cp .env.example .env
    ```
 
-   Edit `.env` and set `DATABASE_URL` to your Postgres connection string, e.g.:
+   Edit `.env` and set your Neon database and auth values:
 
    ```env
    DATABASE_URL=postgres://user:password@localhost:5432/agency_docs
+   NEON_AUTH_BASE_URL=https://your-auth-endpoint.neon.tech
+   NEON_AUTH_COOKIE_SECRET=generated-secret-at-least-32-characters-long
    ```
+
+   Enable Neon Auth in the Neon Console, then copy the Neon Auth URL into `NEON_AUTH_BASE_URL`.
+   Generate the cookie secret with `openssl rand -base64 32`.
 
 3. **Apply the database schema**
 
@@ -46,7 +51,7 @@ A Next.js app for managing feature docs, with a Postgres database and [Drizzle O
    pnpm dev
    ```
 
-   Open [http://localhost:3000](http://localhost:3000). You can browse features at `/features`, create one at `/features/create`, and view a single feature at `/features/[id]`.
+   Open [http://localhost:3000](http://localhost:3000). You can browse features at `/features`, sign in at `/auth/sign-in`, sign up at `/auth/sign-up`, create one at `/features/create`, and view a single feature at `/features/[id]`.
 
 ## Database scripts (Drizzle)
 
@@ -64,10 +69,12 @@ A Next.js app for managing feature docs, with a Postgres database and [Drizzle O
 
 - `src/app/` – Next.js App Router (pages, layouts)
 - `src/db/` – Drizzle schema, client, and queries
+- `src/lib/auth/` – Neon Auth server and client helpers
 - `migrations/` – Generated SQL migrations (when using `db:generate`)
 
 ## Tech stack
 
 - **Framework:** Next.js 16 (App Router)
 - **Database:** PostgreSQL with [Drizzle ORM](https://orm.drizzle.team/)
+- **Auth:** [Neon Auth](https://neon.com/docs/neon-auth/quick-start/nextjs)
 - **Styling:** Tailwind CSS

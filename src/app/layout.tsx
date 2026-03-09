@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import AuthProvider from "@/components/AuthProvider";
 import NavBar from "@/components/NavBar";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
@@ -17,10 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", figtree.variable)}>
+    <html
+      lang="en"
+      className={cn("font-sans", figtree.variable)}
+      suppressHydrationWarning
+    >
       <body>
-        <NavBar />
-        {children}
+        <AuthProvider>
+          <NavBar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

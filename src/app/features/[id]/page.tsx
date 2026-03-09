@@ -14,7 +14,7 @@ export default async function FeaturePage({ params }: Props) {
 
   return (
     <article>
-      <h1>{feature.featureName}</h1>
+      <h1>{feature.title}</h1>
       <time dateTime={feature.createdAt.toISOString()}>
         {feature.createdAt.toLocaleDateString()}
       </time>

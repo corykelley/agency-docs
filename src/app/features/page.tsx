@@ -11,7 +11,7 @@ async function FeaturesData() {
         <article key={feature.id}>
           <h1>
             <Link href={`/features/${feature.id}`} className="hover:underline">
-              {feature.featureName}
+              {feature.title}
             </Link>
           </h1>
           <time dateTime={feature.createdAt.toISOString()}>
