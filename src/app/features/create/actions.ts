@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createFeature, getNextFeatureId } from "@/db/queries/insert";
+import { createFeature, getNextFeatureId } from "@/db/queries/features";
 import type { InsertFeature } from "@/db/schema";
 
 export async function createFeatureAction(

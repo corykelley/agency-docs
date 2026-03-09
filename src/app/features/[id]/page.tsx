@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getFeatureById } from "@/db/queries/select";
+import { getFeatureById } from "@/db/queries/features";
 
 type Props = { params: Promise<{ id: string }> };
 

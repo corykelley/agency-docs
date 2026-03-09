@@ -1,4 +1,4 @@
-import { getAllFeatures } from "@/db/queries/select";
+import { getAllFeatures } from "@/db/queries/features";
 import Link from "next/link";
 import { Suspense } from "react";
 
