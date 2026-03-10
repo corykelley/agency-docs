@@ -5,5 +5,5 @@ export default auth.middleware({
 });
 
 export const config = {
-  matcher: ["/features/create/:path*"],
+  matcher: ["/features/create/:path*", "/sites/:slug/features/create/:path*"],
 };

@@ -15,14 +15,23 @@ export async function createFeatureAction(
     redirect("/auth/sign-in");
   }
 
+  const siteId = Number(formData.get("siteId"));
+  const siteSlug = formData.get("siteSlug");
   const title = formData.get("title");
   const markdown = formData.get("markdown");
 
-  if (!title || !markdown) {
+  if (
+    !Number.isInteger(siteId) ||
+    siteId < 1 ||
+    !siteSlug ||
+    !title ||
+    !markdown
+  ) {
     return { error: "All fields are required." };
   }
 
   const data: InsertFeature = {
+    siteId,
     title: String(title).trim(),
     markdown: String(markdown).trim(),
   };
@@ -33,5 +42,5 @@ export async function createFeatureAction(
     return { error: "Failed to create feature. It may already exist." };
   }
 
-  redirect("/features");
+  redirect(`/sites/${siteSlug}`);
 }

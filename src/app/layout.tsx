@@ -26,7 +26,7 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <NavBar />
-          {children}
+          <main className="container mx-auto">{children}</main>
         </AuthProvider>
       </body>
     </html>

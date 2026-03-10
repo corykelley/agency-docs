@@ -16,18 +16,6 @@ export default function NavBar() {
           <Link href="/" className="font-semibold">
             AgencyDocs
           </Link>
-
-          <ul className="flex flex-row items-center gap-x-4 text-sm">
-            <li>
-              <Link href="/features">All Features</Link>
-            </li>
-            <SignedIn>
-              <li>
-                <Link href="/features/create">Create Feature</Link>
-              </li>
-            </SignedIn>
-          </ul>
-
           <div className="flex items-center gap-2">
             <SignedOut>
               <Button asChild size="sm" variant="ghost">
@@ -39,7 +27,14 @@ export default function NavBar() {
             </SignedOut>
 
             <SignedIn>
-              <UserButton size="icon" />
+              <ul className="flex flex-row gap-x-2 items-center">
+                <li>
+                  <Link href="/dashboard">My Dashboard</Link>
+                </li>
+                <li>
+                  <UserButton size="icon" />
+                </li>
+              </ul>
             </SignedIn>
           </div>
         </div>

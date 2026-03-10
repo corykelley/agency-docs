@@ -1,9 +1,14 @@
 "use client";
 
 import { useActionState } from "react";
-import { createFeatureAction } from "./actions";
+import { createFeatureAction } from "@/app/sites/[slug]/features/create/actions";
 
-export default function CreateFeaturePage() {
+type FeatureFormProps = {
+  siteId: number;
+  siteSlug: string;
+};
+
+export default function FeatureForm({ siteId, siteSlug }: FeatureFormProps) {
   const [state, formAction, isPending] = useActionState(
     createFeatureAction,
     null,
@@ -11,6 +16,9 @@ export default function CreateFeaturePage() {
 
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4">
+      <input type="hidden" name="siteId" value={siteId} />
+      <input type="hidden" name="siteSlug" value={siteSlug} />
+
       <div>
         <label htmlFor="title" className="mb-1 block text-sm font-medium">
           Feature title
@@ -24,6 +32,7 @@ export default function CreateFeaturePage() {
           className="w-full rounded border border-gray-300 px-3 py-2 text-sm"
         />
       </div>
+
       <div>
         <label htmlFor="markdown" className="mb-1 block text-sm font-medium">
           Markdown
@@ -37,11 +46,13 @@ export default function CreateFeaturePage() {
           className="w-full rounded border border-gray-300 px-3 py-2 text-sm"
         />
       </div>
+
       {state?.error && (
         <p className="text-sm text-red-600" role="alert">
           {state.error}
         </p>
       )}
+
       <button
         type="submit"
         disabled={isPending}
