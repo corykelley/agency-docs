@@ -1,6 +1,6 @@
 # Agency Docs
 
-A Next.js app for managing feature docs, with a Postgres database and [Drizzle ORM](https://orm.drizzle.team/).
+A Next.js app for managing feature docs per website, with Postgres ([Drizzle ORM](https://orm.drizzle.team/)) and [Neon Auth](https://neon.com/docs/neon-auth/quick-start/nextjs).
 
 ## Prerequisites
 
@@ -20,30 +20,33 @@ A Next.js app for managing feature docs, with a Postgres database and [Drizzle O
 
 2. **Set up environment**
 
-   Copy the example env file and add your database URL:
+   Copy the example env file and add your values:
 
    ```bash
    cp .env.example .env
    ```
 
-   Edit `.env` and set your Neon database and auth values:
+   Edit `.env`:
 
    ```env
-   DATABASE_URL=postgres://user:password@localhost:5432/agency_docs
+   DATABASE_URL=postgresql://user:password@host:5432/dbname?sslmode=require
    NEON_AUTH_BASE_URL=https://your-auth-endpoint.neon.tech
-   NEON_AUTH_COOKIE_SECRET=generated-secret-at-least-32-characters-long
+   NEON_AUTH_COOKIE_SECRET=<generate with: openssl rand -base64 32>
    ```
 
-   Enable Neon Auth in the Neon Console, then copy the Neon Auth URL into `NEON_AUTH_BASE_URL`.
-   Generate the cookie secret with `openssl rand -base64 32`.
+   - **DATABASE_URL:** From Neon (or your Postgres provider). Use the pooler URL if needed.
+   - **NEON_AUTH_BASE_URL:** From Neon Console → your project → Auth. Enable Auth and copy the URL.
+   - **NEON_AUTH_COOKIE_SECRET:** At least 32 characters; e.g. `openssl rand -base64 32`.
 
 3. **Apply the database schema**
 
-   Push the schema to your database (creates/updates tables):
+   Run migrations (creates tables including `websites_table`, `website_members_table`, `features_table`):
 
    ```bash
-   pnpm db:push
+   pnpm db:migrate
    ```
+
+   For quick dev iteration without migration files you can use `pnpm db:push` instead (see Database scripts below).
 
 4. **Run the app**
 
@@ -51,30 +54,43 @@ A Next.js app for managing feature docs, with a Postgres database and [Drizzle O
    pnpm dev
    ```
 
-   Open [http://localhost:3000](http://localhost:3000). You can browse features at `/features`, sign in at `/auth/sign-in`, sign up at `/auth/sign-up`, create one at `/features/create`, and view a single feature at `/features/[id]`.
+   Open [http://localhost:3000](http://localhost:3000).
+
+## Main routes
+
+| Route | Description |
+|-------|-------------|
+| `/` | Home |
+| `/auth/sign-in`, `/auth/sign-up` | Sign in / sign up (Neon Auth) |
+| `/dashboard` | Your sites (requires sign-in). Create new sites and see sites you own or are a member of. |
+| `/sites/[slug]` | A single website: name, URL, and its features. Link to add a feature. |
+| `/sites/[slug]/features/create` | Create a feature for that website (protected). |
+
+Features are scoped to a website; create them from a site’s page so the site is chosen automatically.
 
 ## Database scripts (Drizzle)
 
-| Script           | Command           | Description                                              |
-|------------------|-------------------|----------------------------------------------------------|
-| Generate migrations | `pnpm db:generate` | Generate SQL migration files from `src/db/schema.ts`     |
-| Push schema      | `pnpm db:push`    | Push schema to the DB (no migration files; good for dev) |
-| Run migrations   | `pnpm db:migrate` | Run pending migrations from `migrations/`                 |
-| Drizzle Studio   | `pnpm db:studio`  | Open the Drizzle Studio UI to inspect/edit data         |
+| Script | Command | Description |
+|--------|---------|-------------|
+| Generate migrations | `pnpm db:generate` | Generate SQL from `src/db/schema.ts` |
+| Run migrations | `pnpm db:migrate` | Apply pending migrations in `migrations/` |
+| Push schema | `pnpm db:push` | Sync schema to DB without migration files (dev) |
+| Drizzle Studio | `pnpm db:studio` | Open Drizzle Studio UI |
 
-- Use **`db:push`** for quick iteration in development.
-- Use **`db:generate`** then **`db:migrate`** when you want versioned migrations (e.g. for production or team workflows).
+- Use **`db:migrate`** when you have migrations (e.g. production or team workflows).
+- Use **`db:push`** for quick local dev when you don’t need versioned migrations.
 
 ## Project structure
 
-- `src/app/` – Next.js App Router (pages, layouts)
-- `src/db/` – Drizzle schema, client, and queries
-- `src/lib/auth/` – Neon Auth server and client helpers
-- `migrations/` – Generated SQL migrations (when using `db:generate`)
+- `src/app/` – Next.js App Router (pages, layouts, API routes)
+- `src/components/` – UI (NavBar, AuthProvider, FeatureForm, ui/)
+- `src/db/` – Drizzle schema, client, and queries (websites, features, members)
+- `src/lib/auth/` – Neon Auth server and client
+- `migrations/` – SQL migrations (when using `db:generate` / `db:migrate`)
 
 ## Tech stack
 
 - **Framework:** Next.js 16 (App Router)
 - **Database:** PostgreSQL with [Drizzle ORM](https://orm.drizzle.team/)
-- **Auth:** [Neon Auth](https://neon.com/docs/neon-auth/quick-start/nextjs)
-- **Styling:** Tailwind CSS
+- **Auth:** [Neon Auth](https://neon.com/docs/neon-auth/quick-start/nextjs) (Better Auth)
+- **UI:** Tailwind CSS, shadcn-style components
