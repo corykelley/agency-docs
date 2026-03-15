@@ -13,3 +13,13 @@ export async function getFeatureById(id: number) {
 export async function createFeature(data: InsertFeature) {
   await db.insert(featuresTable).values(data);
 }
+
+export async function editFeature(
+  id: number,
+  data: Pick<InsertFeature, "title" | "markdown">,
+) {
+  await db
+    .update(featuresTable)
+    .set({ title: data.title, markdown: data.markdown })
+    .where(eq(featuresTable.id, id));
+}

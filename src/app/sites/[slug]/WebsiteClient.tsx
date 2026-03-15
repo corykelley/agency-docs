@@ -56,14 +56,21 @@ export default function WebsiteClient({ website }: WebsiteClientProps) {
           </nav>
         </div>
         <section>
-          {activeFeature ? (
-            <>
-              <h1>{activeFeature.title}</h1>
-              <Markdown>{activeFeature.markdown}</Markdown>
-            </>
-          ) : (
-            <h1>Select a feature</h1>
-          )}
+          <div>
+            {activeFeature ? (
+              <div className="flex flex-col gap-y-6">
+                <Link
+                  href={`${website.slug}/features/${activeFeature.id}/edit`}
+                >
+                  Edit feature
+                </Link>
+                <h1>{activeFeature.title}</h1>
+                <Markdown>{activeFeature.markdown}</Markdown>
+              </div>
+            ) : (
+              <h1>Select a feature</h1>
+            )}
+          </div>
         </section>
       </div>
     </section>

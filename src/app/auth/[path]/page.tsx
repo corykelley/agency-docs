@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import { AuthView } from "@neondatabase/neon-js/auth/react/ui";
 
-type AuthPath = "sign-in" | "sign-up";
+type AuthPath = "sign-in" | "sign-up" | "sign-out";
 
 type AuthPageProps = {
   params: Promise<{ path: string }>;
 };
 
-const validPaths = new Set<AuthPath>(["sign-in", "sign-up"]);
+const validPaths = new Set<AuthPath>(["sign-in", "sign-up", "sign-out"]);
 
 export default async function AuthPage({ params }: AuthPageProps) {
   const { path } = await params;
